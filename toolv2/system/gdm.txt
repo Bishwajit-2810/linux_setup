@@ -1,0 +1,16 @@
+# ============================================================
+# SYSTEM / GDM — Force Wayland session
+# ============================================================
+# Purpose: Make GDM default to a Wayland GNOME session instead
+#          of X11. Required for fractional scaling, HDR, and
+#          Qt6 Wayland apps to behave correctly.
+# ============================================================
+
+sudo nano /etc/gdm/custom.conf
+
+# Add (under the [daemon] section):
+# WaylandEnable=true
+# DefaultSession=gnome
+
+# After reboot, verify:
+echo $XDG_SESSION_TYPE   # should print: wayland

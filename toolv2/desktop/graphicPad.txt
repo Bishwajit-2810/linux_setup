@@ -1,0 +1,10 @@
+# ============================================================
+# DESKTOP / Graphic Tablet — Huion Inspiroy Dial 2
+# ============================================================
+# Purpose: Vendor driver download for the Huion Inspiroy Dial 2.
+# Notes:   Arch has no native package for this model; install
+#          the .deb-equivalent vendor tarball manually.
+# ============================================================
+
+# Driver download page:
+# https://www.huion.com/index.php?m=content&c=index&a=lists&catid=16&down_title2=Inspiroy%20Dial%202

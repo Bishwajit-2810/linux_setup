@@ -1,0 +1,6 @@
+nmcli con edit type pppoe con-name "err"
+set pppoe.username @daffodilnet.com
+save
+yes
+quit
+

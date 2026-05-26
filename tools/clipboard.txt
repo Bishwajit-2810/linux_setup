@@ -1,0 +1,17 @@
+source .AI/Fooocus/fooocus_env/bin/activate
+python .AI/Fooocus/entry_with_update.py
+
+source .AI/WebUI/webui_env/bin/activate
+open-webui serve
+
+du -sh ~/.cache/paru/clone/ /var/cache/pacman/pkg/
+paru -Sccd
+paru -Syyu
+python -m venv venv_name
+pyenv install 3.11.11
+pyenv local 3.11.11
+
+
+pip install open-webui
+open-webui serve
+pip install --upgrade open-webui

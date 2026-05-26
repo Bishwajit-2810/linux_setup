@@ -1,0 +1,33 @@
+# ============================================================
+# APPS / XAMPP — LAMP stack (Apache + MariaDB + PHP)
+# ============================================================
+# Purpose: Install XAMPP and register it as a systemd service.
+# Notes:   XAMPP installs into /opt/lampp. The Apache MySQL data
+#          directory is /opt/lampp/var/mysql.
+# ============================================================
+
+# 1) Install
+paru -S xampp
+sudo systemctl start xampp.service
+
+# 2) Create the systemd unit
+sudo nano /etc/systemd/system/xampp.service
+# ---------- file contents ----------
+# [Unit]
+# Description=XAMPP
+#
+# [Service]
+# ExecStart=/opt/lampp/xampp start
+# ExecStop=/opt/lampp/xampp stop
+# Type=forking
+#
+# [Install]
+# WantedBy=multi-user.target
+# -----------------------------------
+
+# 3) Enable on boot
+sudo systemctl enable xampp.service
+sudo systemctl status xampp.service
+
+# 4) MySQL shell from XAMPP install
+/opt/lampp/bin/mysql -u root -p

@@ -1,0 +1,9 @@
+# ============================================================
+# APPS / VDH coapp — Video DownloadHelper browser companion
+# ============================================================
+# Purpose: Native helper required by the Video DownloadHelper
+#          browser extension so it can download/convert media.
+# Notes:   Installs to ~/.local/share/vdhcoapp.
+# ============================================================
+
+curl -sSLf https://github.com/aclap-dev/vdhcoapp/releases/latest/download/install.sh | bash

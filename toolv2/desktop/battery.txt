@@ -1,0 +1,49 @@
+# ============================================================
+# DESKTOP / Battery — CPU frequency, thermals, power tuning
+# ============================================================
+# Purpose: Set CPU governor, monitor frequency/temps, and
+#          install auto-cpufreq for laptop battery management.
+# Notes:   "battery" filename is historical — this covers all
+#          CPU power/thermal tuning, not just battery state.
+# ============================================================
+
+
+# ---- 1) Live CPU frequency + governor monitor ----
+watch -n 1 "lscpu | grep 'MHz'; cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+
+
+# ---- 2) cpupower — manual governor control ----
+sudo pacman -S cpupower intel-ucode
+sudo cpupower frequency-set -g performance
+cpupower frequency-info
+sudo systemctl enable --now cpupower.service
+
+# Make 'performance' the default — edit /etc/default/cpupower:
+# governor='performance'
+
+
+# ---- 3) Temperature monitoring ----
+sudo pacman -S lm_sensors thermald
+sudo systemctl enable --now thermald
+watch -n 1 "sensors"
+
+
+# ---- 4) auto-cpufreq — adaptive governor (laptop-friendly) ----
+paru -S auto-cpufreq
+sudo auto-cpufreq --install
+auto-cpufreq --stats
+
+# Manual / source install alternative:
+git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+cd auto-cpufreq && sudo ./auto-cpufreq-installer
+
+auto-cpufreq --help
+sudo auto-cpufreq --install
+sudo systemctl status auto-cpufreq
+sudo auto-cpufreq --stats
+
+
+# ---- 5) Stress test (verify scaling under load) ----
+sudo pacman -S stress
+stress --cpu $(nproc) --timeout 20
+watch -n 1 "lscpu | grep 'MHz'"

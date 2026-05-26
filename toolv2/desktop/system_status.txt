@@ -1,0 +1,49 @@
+# ============================================================
+# DESKTOP / System Services — enable, start, status reference
+# ============================================================
+# Purpose: One-stop reference for every systemd unit this setup
+#          uses. Use `enable --now` to do both in a single call.
+# ============================================================
+
+
+# ---- Bluetooth ----
+sudo systemctl enable --now bluetooth
+
+# ---- Firewall ----
+sudo systemctl enable --now ufw
+
+# ---- XAMPP (custom unit — see apps/xampp.txt) ----
+sudo systemctl enable --now xampp.service
+sudo systemctl status xampp.service
+
+# ---- Preload (RAM cache for frequent apps) ----
+sudo systemctl enable --now preload
+
+# ---- Touchegg (touch gestures) ----
+sudo systemctl enable --now touchegg.service
+
+# ---- libvirt / KVM ----
+sudo systemctl enable --now libvirtd.service
+sudo systemctl status libvirtd.service
+sudo virsh net-start default
+sudo virsh net-autostart default
+
+# ---- MongoDB ----
+sudo systemctl enable --now mongodb
+sudo systemctl status mongodb
+
+# ---- Ollama ----
+sudo systemctl enable --now ollama.service
+sudo systemctl status ollama.service
+
+# ---- Portainer (Docker UI) ----
+sudo systemctl enable --now portainer.service
+sudo systemctl status portainer.service
+
+# ---- MySQL (standalone, not XAMPP) ----
+sudo systemctl enable --now mysqld
+sudo systemctl status mysqld
+
+# ---- CPU power / thermals ----
+sudo systemctl enable --now cpupower.service
+sudo systemctl enable --now thermald

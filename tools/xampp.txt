@@ -1,0 +1,23 @@
+paru -S xampp
+sudo systemctl start xampp.service
+
+
+sudo nano /etc/systemd/system/xampp.service 
+
+[Unit]
+Description=XAMPP
+[Service]
+ExecStart=/opt/lampp/xampp start
+ExecStop=/opt/lampp/xampp stop
+Type=forking
+[Install]
+WantedBy=multi-user.target
+
+
+sudo systemctl enable xampp.service
+sudo systemctl status xampp.service
+
+
+go to xampp shell
+/opt/lampp/bin/mysql -u root -p
+

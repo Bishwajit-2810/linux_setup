@@ -1,0 +1,30 @@
+# ============================================================
+# RUNTIME / Python via pyenv — Install & switch versions
+# ============================================================
+# Purpose: Manage multiple Python versions per-project.
+# Notes:   pyenv shims must come *before* system python in PATH,
+#          which the init hooks below take care of.
+# ============================================================
+
+sudo pacman -S pyenv
+
+# Add to ~/.bashrc:
+# export PYENV_ROOT="$HOME/.pyenv"
+# export PATH="$PYENV_ROOT/bin:$PATH"
+# eval "$(pyenv init --path)"
+# eval "$(pyenv init -)"
+
+
+# ---- Install a version and pin it for the current dir ----
+pyenv install 3.11.11
+pyenv local 3.11.11
+
+
+# ---- Create + activate a project virtualenv ----
+python -m venv venv_name
+source venv_name/bin/activate
+
+# ---- Useful commands ----
+# pyenv versions           # list installed versions
+# pyenv install --list     # list available versions
+# pyenv global 3.11.11     # default version for all shells

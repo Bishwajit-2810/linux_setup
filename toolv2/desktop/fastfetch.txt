@@ -1,0 +1,14 @@
+# ============================================================
+# DESKTOP / Fastfetch — Custom ASCII art / presets
+# ============================================================
+# Purpose: Clone an alternate fastfetch theme repo into
+#          ~/.local/share so its presets are available.
+# Prereq:  sudo pacman -S fastfetch
+# Config:  ~/.config/fastfetch/    (see config/fastfetch/)
+# ============================================================
+
+cd ~/.local/share
+git clone https://github.com/LierB/fastfetch
+
+# Run with a preset:
+# fastfetch --config ~/.local/share/fastfetch/<preset>.jsonc

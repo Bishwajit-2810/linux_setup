@@ -1,0 +1,15 @@
+# Packages to remove (GNOME bloat / replaced by better alternatives)
+epiphany
+gimp
+heroic-games-launcher-bin
+inkscape
+intellij-idea-community-edition
+iotas
+krita
+lutris
+mpv
+potrace
+pycharm-community-edition
+pencil
+devtoolbox
+lmstudio-bin

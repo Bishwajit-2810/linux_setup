@@ -1,0 +1,21 @@
+# ============================================================
+# APPS / Ollama — Local LLM runner
+# ============================================================
+# Purpose: Pull and run local language models with Ollama.
+# Prereq:  sudo pacman -S ollama-cuda    # NVIDIA
+#          sudo pacman -S rocm-hip-sdk   # AMD
+#          sudo systemctl enable --now ollama.service
+# ============================================================
+
+ollama run deepseek-r1
+ollama run gemma3
+ollama run qwen3
+ollama run llama3.2
+ollama run llama3.1
+ollama run mistral
+ollama run llava
+
+# Useful commands
+# ollama list                 # show installed models
+# ollama rm <model>           # remove a model
+# ollama pull <model>         # download without running

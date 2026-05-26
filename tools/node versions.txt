@@ -1,0 +1,16 @@
+sudo pacman -S nvm
+
+.bashrc
+source /usr/share/nvm/init-nvm.sh
+
+
+# Install specific versions
+nvm install 12
+nvm install 19
+nvm install 23
+nvm install 24.2.0
+
+# Switch between versions
+nvm use 12   
+nvm use 19  
+nvm use 24.2.0 

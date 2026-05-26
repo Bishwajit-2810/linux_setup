@@ -1,0 +1,13 @@
+# ============================================================
+# APPS / VS Codium — Install .vsix extensions
+# ============================================================
+# Purpose: Install extensions that are not on the open VSX
+#          marketplace (e.g. corporate / proprietary .vsix files).
+# Notes:   `--profile` targets a specific Codium profile; drop
+#          the flag to install into the default profile.
+# ============================================================
+
+codium --install-extension /path/to/extension.vsix --profile bk
+
+# Example:
+# codium --install-extension ~/Downloads/ms-vscode.vscode-typescript-next-6.0.20251016.vsix --profile bk

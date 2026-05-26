@@ -1,0 +1,7 @@
+ollama run deepseek-r1
+ollama run gemma3
+ollama run qwen3
+ollama run llama3.2
+ollama run llama3.1
+ollama run mistral
+ollama run llava

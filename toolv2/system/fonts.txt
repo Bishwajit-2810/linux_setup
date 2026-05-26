@@ -1,0 +1,28 @@
+# ============================================================
+# SYSTEM / Fonts — Latin, CJK, emoji, Bangla
+# ============================================================
+# Purpose: Install a broad font set so the web, GTK apps, and
+#          IM clients render every script without tofu boxes.
+# ============================================================
+
+
+# ---- Noto family (covers most scripts + emoji) ----
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+
+
+# ---- Western desktop fonts ----
+sudo pacman -S ttf-dejavu ttf-liberation ttf-roboto
+
+
+# ---- Google fonts + Microsoft TTFs (AUR) ----
+paru -S ttf-google-sans ttf-google ttf-ms-fonts
+
+
+# ---- Bangla support ----
+git clone https://github.com/fahadahammed/linux-bangla-fonts.git
+# Install manually:
+#   sudo cp linux-bangla-fonts/*.ttf /usr/share/fonts/TTF/
+#   fc-cache -fv
+
+# Bangla input method (Avro):
+paru -S ibus-avro-git

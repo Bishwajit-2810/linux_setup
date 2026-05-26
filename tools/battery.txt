@@ -1,0 +1,44 @@
+watch -n 1 "lscpu | grep 'MHz'; cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_governor"
+sudo pacman -S cpupower intel-ucode
+sudo cpupower frequency-set -g performance
+cpupower frequency-info
+sudo systemctl enable cpupower.service
+sudo systemctl start cpupower.service
+
+Then edit /etc/default/cpupower:
+
+# Set this:
+governor='performance'
+
+
+watch -n 1 "sensors"
+
+paru -S auto-cpufreq
+sudo auto-cpufreq --install
+
+
+auto-cpufreq --stats
+
+stress load
+sudo pacman -S stress
+stress --cpu $(nproc) --timeout 20
+
+watch -n 1 "lscpu | grep 'MHz'"
+
+
+sudo pacman -S lm_sensors thermald
+sudo systemctl enable --now thermald
+
+
+
+git clone https://github.com/AdnanHodzic/auto-cpufreq.git
+cd auto-cpufreq && sudo ./auto-cpufreq-installer
+
+auto-cpufreq --help
+sudo auto-cpufreq --install
+sudo systemctl status auto-cpufreq
+sudo auto-cpufreq --stats
+
+
+
+

@@ -1,0 +1,53 @@
+# ── Development & Productivity ────────────────────────────────────────────────
+android-studio
+firebase-tools-bin
+pgadmin4-desktop
+postman-bin
+visual-studio-code-bin
+visual-studio-code-insiders-bin
+#vscodium-bin
+
+# ── AI / LLM ─────────────────────────────────────────────────────────────────
+lmstudio-bin
+
+# ── Databases ─────────────────────────────────────────────────────────────────
+mongodb-bin
+mongodb-compass-bin
+
+# ── Web & Server ──────────────────────────────────────────────────────────────
+portainer-bin
+xampp
+
+# ── GNOME Extensions & Tools ──────────────────────────────────────────────────
+extension-manager
+planify
+parabolic
+devtoolbox
+pencil
+
+# ── Fonts ─────────────────────────────────────────────────────────────────────
+ttf-google
+ttf-google-sans
+ttf-ms-fonts
+
+# ── Input ─────────────────────────────────────────────────────────────────────
+ibus-avro-git
+
+# ── Apps ──────────────────────────────────────────────────────────────────────
+google-chrome
+hydra-launcher-bin
+lorien-bin
+onlyoffice-bin
+proton-vpn-gtk-app
+protonplus
+protontricks
+protonup-qt-bin
+xnviewmp
+zoom
+
+# ── Gaming ────────────────────────────────────────────────────────────────────
+heroic-games-launcher-bin
+lutris
+
+# ── System ────────────────────────────────────────────────────────────────────
+preload

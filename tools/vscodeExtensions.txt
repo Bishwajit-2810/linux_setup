@@ -1,0 +1,3 @@
+codium --install-extension /home/bishwajit/Downloads/ms-vscode.vscode-typescript-next-6.0.20251016.vsix --profile bk
+
+this is the proper way to install-extension to vs codium which are not available(corporate)

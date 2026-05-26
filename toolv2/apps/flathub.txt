@@ -1,0 +1,12 @@
+# ============================================================
+# APPS / Flathub — Flatpak applications
+# ============================================================
+# Purpose: Install common GUI apps from the Flathub remote.
+# Prereq:  sudo pacman -S flatpak
+# ============================================================
+
+flatpak install flathub com.github.tenderowl.frog            # OCR text extractor
+flatpak install flathub com.mongodb.Compass                  # MongoDB GUI
+flatpak install flathub com.stremio.Stremio                  # Media streaming
+flatpak install flathub me.dusansimic.DynamicWallpaper       # Time-of-day wallpapers
+flatpak install flathub com.mattjakeman.ExtensionManager     # GNOME extension manager

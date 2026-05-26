@@ -1,0 +1,33 @@
+source /opt/anaconda/bin/activate root
+source /opt/anaconda/bin/deactivate root
+
+sudo pacman -S qt6-base qt6-wayland
+
+conda create -n qt6env python=3.11
+conda activate qt6env
+
+conda install -c conda-forge pyqt
+pip install PyQt6
+
+in .bashrc
+
+export QT_QPA_PLATFORM=wayland
+export QT_PLUGIN_PATH=/usr/lib/qt6/plugins
+export LD_LIBRARY_PATH=/usr/lib/qt6:$LD_LIBRARY_PATH
+
+
+test
+
+in py file
+
+from PyQt6.QtWidgets import QApplication, QLabel
+app = QApplication([])
+label = QLabel("Hello from Wayland!")
+label.show()
+app.exec()
+
+echo $XDG_SESSION_TYPE
+# should say: wayland
+
+
+

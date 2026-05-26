@@ -1,0 +1,19 @@
+# ============================================================
+# SYSTEM / GRUB — Hide boot menu (single-OS)
+# ============================================================
+# Purpose: Skip the GRUB menu and boot the default entry
+#          immediately. Useful when no dual-boot is needed.
+# Notes:   Press SHIFT during early boot to reveal the menu
+#          when it is hidden.
+# ============================================================
+
+sudo nano /etc/default/grub
+
+# Set:
+# GRUB_TIMEOUT=0
+# GRUB_TIMEOUT_STYLE=hidden
+# GRUB_HIDDEN_TIMEOUT=0
+
+# Rebuild grub.cfg and reboot:
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+sudo reboot

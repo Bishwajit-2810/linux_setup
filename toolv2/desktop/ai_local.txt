@@ -1,0 +1,36 @@
+# ============================================================
+# DESKTOP / AI Local — Open-WebUI, Fooocus, venv activation
+# ============================================================
+# Purpose: Activate local AI tool environments and reinstall /
+#          upgrade Open-WebUI inside a Python venv.
+# Notes:   Venvs are stored under ~/.AI/<tool>/ as a convention.
+#          File previously named clipboard.txt (misnamed).
+# ============================================================
+
+
+# ---- Fooocus (image generation) ----
+source .AI/Fooocus/fooocus_env/bin/activate
+python .AI/Fooocus/entry_with_update.py
+
+
+# ---- Open-WebUI (chat UI over Ollama / OpenAI-compatible APIs) ----
+source .AI/WebUI/webui_env/bin/activate
+open-webui serve
+
+# Install / upgrade Open-WebUI inside the active venv:
+pip install open-webui
+pip install --upgrade open-webui
+open-webui serve
+
+
+# ---- Create a fresh venv for a new AI tool ----
+pyenv install 3.11.11
+pyenv local 3.11.11
+python -m venv venv_name
+source venv_name/bin/activate
+
+
+# ---- paru / pacman cache maintenance ----
+du -sh ~/.cache/paru/clone/ /var/cache/pacman/pkg/
+paru -Sccd
+paru -Syyu

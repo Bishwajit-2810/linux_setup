@@ -1,0 +1,43 @@
+#
+# ~/.bashrc
+#
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+PS1='[\u@\h \W]\$ '
+
+
+#fastfetch
+eval "$(starship init bash)"
+export PATH="$PATH:/home/bishwajit/.softwares/flutter/bin"
+export CHROME_EXECUTABLE=/usr/bin/google-chrome-stable
+
+source /usr/share/nvm/init-nvm.sh
+
+
+export PYENV_ROOT="$HOME/.pyenv"
+export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv init -)"
+
+
+#alias vim='nvim'
+#alias vi='nvim'
+
+
+
+
+#export CRYPTOGRAPHY_OPENSSL_NO_LEGACY=1
+
+#export QT_QPA_PLATFORM=wayland
+#export QT_PLUGIN_PATH=/usr/lib/qt6/plugins
+#export LD_LIBRARY_PATH=/usr/lib/qt6:$LD_LIBRARY_PATH
+
+
+
+
+
+

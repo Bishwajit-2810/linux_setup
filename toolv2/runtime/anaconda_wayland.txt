@@ -1,0 +1,44 @@
+# ============================================================
+# RUNTIME / Anaconda + Qt6 on Wayland
+# ============================================================
+# Purpose: Get PyQt6 GUI apps rendering natively on Wayland
+#          when running inside an Anaconda environment.
+# Notes:   Without QT_QPA_PLATFORM=wayland, Qt apps fall back
+#          to XWayland with blurry HiDPI scaling.
+# ============================================================
+
+
+# ---- 1) Activate / deactivate the base Anaconda env ----
+source /opt/anaconda/bin/activate root
+# source /opt/anaconda/bin/deactivate root
+
+
+# ---- 2) Install Qt6 Wayland platform plugin ----
+sudo pacman -S qt6-base qt6-wayland
+
+
+# ---- 3) Create an isolated conda env for Qt6 work ----
+conda create -n qt6env python=3.11
+conda activate qt6env
+
+conda install -c conda-forge pyqt
+pip install PyQt6
+
+
+# ---- 4) Tell Qt to use Wayland — add to ~/.bashrc ----
+# export QT_QPA_PLATFORM=wayland
+# export QT_PLUGIN_PATH=/usr/lib/qt6/plugins
+# export LD_LIBRARY_PATH=/usr/lib/qt6:$LD_LIBRARY_PATH
+
+
+# ---- 5) Quick test ----
+# Save as test.py and run `python test.py`:
+#
+# from PyQt6.QtWidgets import QApplication, QLabel
+# app = QApplication([])
+# label = QLabel("Hello from Wayland!")
+# label.show()
+# app.exec()
+
+# Confirm session type:
+echo $XDG_SESSION_TYPE   # should print: wayland

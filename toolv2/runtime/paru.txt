@@ -1,0 +1,14 @@
+# ============================================================
+# RUNTIME / paru — Install the AUR helper
+# ============================================================
+# Purpose: Bootstrap `paru` from the AUR (no helper required).
+# Notes:   Run as a regular user; makepkg refuses to run as root.
+# ============================================================
+
+sudo pacman -S --needed base-devel git
+git clone https://aur.archlinux.org/paru.git
+cd paru
+makepkg -si
+
+# Verify:
+# paru --version

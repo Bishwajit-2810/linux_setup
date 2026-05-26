@@ -1,0 +1,9 @@
+paru -S ttf-google-sans ttf-google
+sudo pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+sudo pacman -S ttf-dejavu ttf-liberation ttf-roboto
+sudo pacman -S noto-fonts-extra
+
+
+git clone https://github.com/fahadahammed/linux-bangla-fonts.git
+
+

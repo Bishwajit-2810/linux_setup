@@ -1,0 +1,30 @@
+# ============================================================
+# RUNTIME / Node.js via nvm — Install & switch versions
+# ============================================================
+# Purpose: Manage multiple Node.js versions side-by-side.
+# Notes:   The Arch `nvm` package needs to be sourced manually;
+#          it does NOT auto-load like the curl-based installer.
+# ============================================================
+
+sudo pacman -S nvm
+
+# Add to ~/.bashrc:
+# source /usr/share/nvm/init-nvm.sh
+
+
+# ---- Install specific versions ----
+nvm install 12
+nvm install 19
+nvm install 23
+nvm install 24.2.0
+
+
+# ---- Switch between versions ----
+nvm use 12
+nvm use 19
+nvm use 24.2.0
+
+# ---- Useful commands ----
+# nvm ls                # list installed versions
+# nvm ls-remote         # list available versions
+# nvm alias default 24  # default version for new shells

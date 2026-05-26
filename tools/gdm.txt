@@ -1,0 +1,6 @@
+sudo nano /etc/gdm/custom.conf
+
+WaylandEnable=true
+DefaultSession=gnome
+
+echo $XDG_SESSION_TYPE

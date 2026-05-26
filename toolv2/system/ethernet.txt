@@ -1,0 +1,22 @@
+# ============================================================
+# SYSTEM / Ethernet — PPPoE (Daffodilnet)
+# ============================================================
+# Purpose: Create an nmcli PPPoE connection for ISPs that
+#          require username/password auth over the wire.
+# Notes:   Replace `user@daffodilnet.com` with your actual
+#          ISP-issued account. The con-name "err" is the
+#          NetworkManager profile name — any string works.
+# ============================================================
+
+sudo pacman -S rp-pppoe
+
+nmcli con edit type pppoe con-name "err"
+set pppoe.username user@daffodilnet.com
+save
+yes
+quit
+
+# Bring it up:
+# nmcli con up err
+# Tear it down:
+# nmcli con down err
