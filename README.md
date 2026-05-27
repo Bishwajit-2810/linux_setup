@@ -9,6 +9,7 @@ A personal collection of scripts and configuration files for a fast, consistent 
 - **⚡ Automated Installation:** Interactive scripts to install packages from the official repos and the AUR using either `paru` or `yay`.
 - **🐧 Two Distros:** Separate `arch/` and `cachyOs/` kits with the same structure but distro-tuned package lists. See [`PACKAGE_DIFF.md`](PACKAGE_DIFF.md) for what differs and why.
 - **🔧 Editable Package Lists:** All packages live in plain text files under each distro's `packages/` folder — add or remove a package by editing a single line, no scripting needed.
+- **🐢 Optional GNOME Layer:** Packages tied to the GNOME desktop (shell, `gdm`, extensions, tweaks, `gnome-boxes`) are split into `packages/gnome.txt` and installed via a dedicated menu option — skip it entirely on a non-GNOME desktop. Generic GTK apps stay in `aur.txt`.
 - **🎨 Post-Installation Configuration:** The shared `config/` directory holds drop-in configs for `fastfetch`, `starship`, and a working `.bashrc`.
 - **🗂️ Organized Guides:** The shared `toolv2/` directory groups command references by topic for faster lookup.
 - **📖 Manual Setup Guide:** Each distro folder ships a `manual_setup.txt` documenting every manual step, organized into numbered sections.
@@ -26,12 +27,13 @@ A personal collection of scripts and configuration files for a fast, consistent 
 │   └── packages/
 │       ├── pacman.txt       — official repo packages
 │       ├── aur.txt          — AUR packages
+│       ├── gnome.txt        — GNOME desktop, extensions & GNOME apps
 │       └── uninstall.txt    — packages to remove (bloat / replaced apps)
 ├── cachyOs/                 — CachyOS setup kit (same layout)
 │   ├── setup_paru.sh
 │   ├── setup_yay.sh
 │   ├── manual_setup.txt     — CachyOS-adapted manual reference (35 sections)
-│   └── packages/{pacman,aur,uninstall}.txt
+│   └── packages/{pacman,aur,gnome,uninstall}.txt
 ├── config/                  — shared drop-in configuration
 │   ├── .bashrc              — working bash config (starship, pyenv, nvm, flutter)
 │   ├── fastfetch/           — system-info display configs, presets, assets
@@ -70,6 +72,7 @@ Open any file under `packages/` and add or remove packages before running. Lines
 ```text
 packages/pacman.txt    — official repo packages
 packages/aur.txt       — AUR packages
+packages/gnome.txt     — GNOME desktop / extensions / GNOME apps
 packages/uninstall.txt — packages to uninstall
 ```
 
@@ -90,9 +93,10 @@ On Arch the AUR helper is installed automatically if missing. On CachyOS both `p
 ```text
 1) Install official (pacman) packages
 2) Install AUR packages
-3) Uninstall packages
-4) Dry run (preview)
-5) Exit
+3) Install GNOME packages (desktop, extensions, GNOME apps)
+4) Uninstall packages
+5) Dry run (preview)
+6) Exit
 ```
 
 ---

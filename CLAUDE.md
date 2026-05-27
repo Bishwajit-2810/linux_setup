@@ -16,12 +16,12 @@ CachyOS is Arch-based, so the two distro folders are intentionally near-identica
 │   ├── setup_yay.sh       — installer using yay
 │   ├── setup_paru.sh      — installer using paru
 │   ├── manual_setup.txt   — 33-section manual reference
-│   └── packages/{pacman,aur,uninstall}.txt
+│   └── packages/{pacman,aur,gnome,uninstall}.txt
 ├── cachyOs/               — CachyOS setup kit (same structure)
 │   ├── setup_yay.sh
 │   ├── setup_paru.sh
 │   ├── manual_setup.txt   — 35-section manual reference, CachyOS-adapted
-│   └── packages/{pacman,aur,uninstall}.txt
+│   └── packages/{pacman,aur,gnome,uninstall}.txt
 ├── config/                — shared drop-in config (.bashrc, starship, fastfetch)
 ├── toolv2/                — shared topic-grouped command references
 └── PACKAGE_DIFF.md        — arch vs cachyOs package differences + rationale
@@ -37,11 +37,13 @@ bash setup_paru.sh
 chmod +x setup_yay.sh && ./setup_yay.sh
 ```
 
-The interactive menu offers: install pacman packages, install AUR packages, uninstall packages, dry run, exit. Both scripts read their package lists from the sibling `packages/` directory (`$SCRIPT_DIR/packages`), so they must be run from inside their own distro folder.
+The interactive menu offers: install pacman packages, install AUR packages, install GNOME packages, uninstall packages, dry run, exit. Both scripts read their package lists from the sibling `packages/` directory (`$SCRIPT_DIR/packages`), so they must be run from inside their own distro folder.
 
 ## Architecture
 
-**Per-distro folders** — `arch/` and `cachyOs/` each hold two parallel scripts (`setup_yay.sh`, `setup_paru.sh`) that are functionally identical except for the AUR helper used (`yay` vs `paru`). Package lists (`packages/pacman.txt`, `packages/aur.txt`, `packages/uninstall.txt`) are plain text — one package per line, `#` comments and blank lines ignored — and are the primary thing to edit when adding/removing packages.
+**Per-distro folders** — `arch/` and `cachyOs/` each hold two parallel scripts (`setup_yay.sh`, `setup_paru.sh`) that are functionally identical except for the AUR helper used (`yay` vs `paru`). Package lists (`packages/pacman.txt`, `packages/aur.txt`, `packages/gnome.txt`, `packages/uninstall.txt`) are plain text — one package per line, `#` comments and blank lines ignored — and are the primary thing to edit when adding/removing packages.
+
+**GNOME packages are split out** — packages genuinely tied to the GNOME *desktop* (the shell, `gdm`, extensions, `gnome-tweaks`, `extension-manager`, `gnome-boxes`) live in `packages/gnome.txt` (not in `pacman.txt`/`aur.txt`), installed via menu option 3. Because that list mixes official-repo and AUR packages, `install_gnome_packages` always uses the AUR helper (`yay`/`paru` handle both). Skip it on a non-GNOME desktop. Keep the scope tight: generic GTK4/libadwaita apps (e.g. `planify`, `parabolic`, `devtoolbox`) run on any desktop and belong in `aur.txt`, not here — only add a package to `gnome.txt` if it requires or only makes sense under the GNOME desktop.
 
 **arch vs cachyOs differences** — keep the two folders structurally in sync; only the package lists and distro-specific manual steps should diverge. The CachyOS scripts differ from Arch in two ways: the header reads "CACHYOS LINUX SETUP KIT", and `install_yay`/`install_paru` try `pacman -S` first (both helpers ship in the CachyOS repo / come pre-installed) before falling back to an AUR build. The CachyOS manual reference swaps in `chwd` for GPU drivers, `cachyos-rate-mirrors` for mirror ranking, and the `linux-cachyos` kernel. Whenever you change a package in one distro, decide whether it should change in the other and update `PACKAGE_DIFF.md`.
 
