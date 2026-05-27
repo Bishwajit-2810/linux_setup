@@ -1,0 +1,55 @@
+# NOTE: CachyOS ships paru pre-installed and enables the Chaotic-AUR repo by
+# default, so several entries that are AUR-only on stock Arch resolve straight
+# from a binary repo here (faster, no compile). Those are noted inline.
+
+# ── Development & Productivity ────────────────────────────────────────────────
+android-studio
+firebase-tools-bin
+pgadmin4-desktop
+postman-bin
+visual-studio-code-bin
+visual-studio-code-insiders-bin
+#vscodium-bin
+
+# ── AI / LLM ─────────────────────────────────────────────────────────────────
+lmstudio-bin
+
+# ── Databases ─────────────────────────────────────────────────────────────────
+mongodb-bin
+mongodb-compass-bin
+
+# ── Web & Server ──────────────────────────────────────────────────────────────
+portainer-bin
+xampp
+
+# ── Fonts ─────────────────────────────────────────────────────────────────────
+ttf-google
+ttf-google-sans
+ttf-ms-fonts
+
+# ── Input ─────────────────────────────────────────────────────────────────────
+ibus-avro-git
+
+# ── Apps ──────────────────────────────────────────────────────────────────────
+google-chrome
+hydra-launcher-bin
+devtoolbox
+lorien-bin
+onlyoffice-bin
+parabolic
+pencil
+planify
+protonplus
+protonup-qt-bin
+xnviewmp
+zoom
+
+# ── Gaming ────────────────────────────────────────────────────────────────────
+heroic-games-launcher-bin
+
+# ── In Chaotic-AUR / CachyOS repo on CachyOS (install via pacman instead) ──────
+# extension-manager   → moved to packages/pacman.txt
+# proton-vpn-gtk-app  → moved to packages/pacman.txt
+# protontricks        → moved to packages/pacman.txt
+# lutris              → moved to packages/pacman.txt
+# preload             → available from CachyOS repo as `preload`

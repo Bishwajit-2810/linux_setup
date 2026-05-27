@@ -44,8 +44,8 @@ print_header() {
   echo
   echo -e "${BOLD}${BLUE}  ╔══════════════════════════════════════════════╗${R}"
   echo -e "${BOLD}${BLUE}  ║${R}                                              ${BOLD}${BLUE}║${R}"
-  echo -e "${BOLD}${BLUE}  ║${R}  ${BOLD}${WHITE}         ARCH LINUX SETUP KIT             ${R}  ${BOLD}${BLUE}║${R}"
-  echo -e "${BOLD}${BLUE}  ║${R}  ${DIM}${GRAY}          AUR helper  ›  yay              ${R}  ${BOLD}${BLUE}║${R}"
+  echo -e "${BOLD}${BLUE}  ║${R}  ${BOLD}${WHITE}        CACHYOS LINUX SETUP KIT           ${R}  ${BOLD}${BLUE}║${R}"
+  echo -e "${BOLD}${BLUE}  ║${R}  ${DIM}${GRAY}          AUR helper  ›  paru             ${R}  ${BOLD}${BLUE}║${R}"
   echo -e "${BOLD}${BLUE}  ║${R}                                              ${BOLD}${BLUE}║${R}"
   echo -e "${BOLD}${BLUE}  ╚══════════════════════════════════════════════╝${R}"
   echo
@@ -55,37 +55,41 @@ print_header() {
 main_menu() {
   print_header
 
-  local n_pacman n_aur n_remove
+  local n_pacman n_aur n_gnome n_remove
   n_pacman=$(pkg_count "$PKG_DIR/pacman.txt")
   n_aur=$(pkg_count "$PKG_DIR/aur.txt")
+  n_gnome=$(pkg_count "$PKG_DIR/gnome.txt")
   n_remove=$(pkg_count "$PKG_DIR/uninstall.txt")
 
   echo -e "${BOLD}${WHITE}  Packages${R}"
   echo -e "  ${GRAY}pacman.txt${R}    ${CYAN}${n_pacman} packages${R}"
   echo -e "  ${GRAY}aur.txt${R}       ${CYAN}${n_aur} packages${R}"
+  echo -e "  ${GRAY}gnome.txt${R}     ${CYAN}${n_gnome} packages${R}"
   echo -e "  ${GRAY}uninstall.txt${R} ${CYAN}${n_remove} packages${R}"
   echo
   divider
   echo
   echo -e "  ${BOLD}${GREEN} 1${R}  ${WHITE}Install pacman packages${R}     ${DIM}${GRAY}[${n_pacman}]${R}"
   echo -e "  ${BOLD}${GREEN} 2${R}  ${WHITE}Install AUR packages${R}        ${DIM}${GRAY}[${n_aur}]${R}"
-  echo -e "  ${BOLD}${YELLOW} 3${R}  ${WHITE}Uninstall packages${R}          ${DIM}${GRAY}[${n_remove}]${R}"
-  echo -e "  ${BOLD}${CYAN} 4${R}  ${WHITE}Dry run preview${R}"
-  echo -e "  ${BOLD}${RED} 5${R}  ${WHITE}Exit${R}"
+  echo -e "  ${BOLD}${GREEN} 3${R}  ${WHITE}Install GNOME packages${R}      ${DIM}${GRAY}[${n_gnome}]${R}"
+  echo -e "  ${BOLD}${YELLOW} 4${R}  ${WHITE}Uninstall packages${R}          ${DIM}${GRAY}[${n_remove}]${R}"
+  echo -e "  ${BOLD}${CYAN} 5${R}  ${WHITE}Dry run preview${R}"
+  echo -e "  ${BOLD}${RED} 6${R}  ${WHITE}Exit${R}"
   echo
   divider
   echo
-  echo -ne "  ${BOLD}Choose [1-5]:${R} "
+  echo -ne "  ${BOLD}Choose [1-6]:${R} "
   read -r choice
   echo
 
   case "$choice" in
     1) install_pacman_packages ;;
-    2) install_yay; install_aur_packages ;;
-    3) install_yay; uninstall_packages ;;
-    4) show_dry_run ;;
-    5) echo -e "  ${CYAN}Goodbye!${R}\n"; exit 0 ;;
-    *) error "Invalid option — please choose 1 to 5." ;;
+    2) install_paru; install_aur_packages ;;
+    3) install_paru; install_gnome_packages ;;
+    4) install_paru; uninstall_packages ;;
+    5) show_dry_run ;;
+    6) echo -e "  ${CYAN}Goodbye!${R}\n"; exit 0 ;;
+    *) error "Invalid option — please choose 1 to 6." ;;
   esac
 
   echo
@@ -102,18 +106,26 @@ check_sudo() {
   fi
 }
 
-install_yay() {
-  if ! command -v yay &>/dev/null; then
-    warn "yay not found — installing..."
-    echo
-    git clone https://aur.archlinux.org/yay.git /tmp/yay
-    pushd /tmp/yay >/dev/null
-    makepkg -si --noconfirm
-    popd >/dev/null
-    rm -rf /tmp/yay
-    log "yay installed."
-    echo
+install_paru() {
+  if command -v paru &>/dev/null; then
+    return   # CachyOS ships paru pre-installed — nothing to do.
   fi
+  # paru lives in the CachyOS repo, so try pacman before building from the AUR.
+  warn "paru not found — installing..."
+  echo
+  if sudo pacman -S --needed --noconfirm paru; then
+    log "paru installed from repo."
+    echo
+    return
+  fi
+  warn "paru not in repos — building from the AUR..."
+  git clone https://aur.archlinux.org/paru.git /tmp/paru
+  pushd /tmp/paru >/dev/null
+  makepkg -si --noconfirm
+  popd >/dev/null
+  rm -rf /tmp/paru
+  log "paru installed."
+  echo
 }
 
 install_pacman_packages() {
@@ -134,12 +146,25 @@ install_aur_packages() {
   mapfile -t pkgs < <(load_packages "$PKG_DIR/aur.txt")
   echo
   echo -e "${BOLD}${BLUE}  ┌─ Installing AUR packages ───────────────────────┐${R}"
-  echo -e "${BOLD}${BLUE}  │${R}  ${CYAN}${#pkgs[@]} packages  ›  yay -S${R}                       ${BOLD}${BLUE}│${R}"
+  echo -e "${BOLD}${BLUE}  │${R}  ${CYAN}${#pkgs[@]} packages  ›  paru -S${R}                      ${BOLD}${BLUE}│${R}"
   echo -e "${BOLD}${BLUE}  └─────────────────────────────────────────────────┘${R}"
   echo
-  yay -S --needed --noconfirm "${pkgs[@]}"
+  paru -S --needed --noconfirm "${pkgs[@]}"
   echo
   log "AUR packages installed successfully."
+}
+
+install_gnome_packages() {
+  local -a pkgs
+  mapfile -t pkgs < <(load_packages "$PKG_DIR/gnome.txt")
+  echo
+  echo -e "${BOLD}${BLUE}  ┌─ Installing GNOME packages ─────────────────────┐${R}"
+  echo -e "${BOLD}${BLUE}  │${R}  ${CYAN}${#pkgs[@]} packages  ›  paru -S${R}                      ${BOLD}${BLUE}│${R}"
+  echo -e "${BOLD}${BLUE}  └─────────────────────────────────────────────────┘${R}"
+  echo
+  paru -S --needed --noconfirm "${pkgs[@]}"
+  echo
+  log "GNOME packages installed successfully."
 }
 
 uninstall_packages() {
@@ -147,10 +172,10 @@ uninstall_packages() {
   mapfile -t pkgs < <(load_packages "$PKG_DIR/uninstall.txt")
   echo
   echo -e "${BOLD}${YELLOW}  ┌─ Uninstalling packages ─────────────────────────┐${R}"
-  echo -e "${BOLD}${YELLOW}  │${R}  ${CYAN}${#pkgs[@]} packages  ›  yay -R${R}                       ${BOLD}${YELLOW}│${R}"
+  echo -e "${BOLD}${YELLOW}  │${R}  ${CYAN}${#pkgs[@]} packages  ›  paru -R${R}                      ${BOLD}${YELLOW}│${R}"
   echo -e "${BOLD}${YELLOW}  └─────────────────────────────────────────────────┘${R}"
   echo
-  yay -R --noconfirm "${pkgs[@]}"
+  paru -R --noconfirm "${pkgs[@]}"
   echo
   log "Packages removed successfully."
 }
@@ -172,6 +197,11 @@ show_dry_run() {
   load_packages "$PKG_DIR/aur.txt" | pr -2 -t -w 80 | sed 's/^/  /'
 
   echo
+  echo -e "  ${BOLD}${BLUE}GNOME packages${R}  ${GRAY}($(pkg_count "$PKG_DIR/gnome.txt"))${R}"
+  divider
+  load_packages "$PKG_DIR/gnome.txt" | pr -2 -t -w 80 | sed 's/^/  /'
+
+  echo
   echo -e "  ${BOLD}${YELLOW}Packages to uninstall${R}  ${GRAY}($(pkg_count "$PKG_DIR/uninstall.txt"))${R}"
   divider
   load_packages "$PKG_DIR/uninstall.txt" | sed 's/^/  /'
@@ -180,5 +210,5 @@ show_dry_run() {
 
 # ── Entry ──────────────────────────────────────────────────────────────────────
 check_sudo
-install_yay
+install_paru
 main_menu

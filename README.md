@@ -1,46 +1,49 @@
-# 🚀 Arch Linux Setup Kit
+# 🚀 Arch & CachyOS Linux Setup Kit
 
-A personal collection of scripts and configuration files for a fast, consistent Arch Linux setup.
+A personal collection of scripts and configuration files for a fast, consistent post-installation setup on **Arch Linux** and **CachyOS**.
 
 ---
 
 ## ✨ Features
 
-- **⚡ Automated Installation:** Interactive scripts to install packages from the official Arch repos and the AUR using either `paru` or `yay`.
-- **🔧 Editable Package Lists:** All packages live in plain text files under `packages/` — add or remove a package by editing a single line, no scripting needed.
-- **🎨 Post-Installation Configuration:** The `config/` directory holds drop-in configurations for `fastfetch`, `starship`, and a working `.bashrc`.
-- **📚 Utility Guides:** The `tools/` directory contains command references for setting up specific software (GRUB, Ollama, XAMPP, pyenv, etc.).
-- **🗂️ Organized Guides:** The `toolv2/` directory groups the same reference notes by topic with an index for faster lookup.
-- **📖 Manual Setup Guide:** `manual_setup.md` (and the mirrored `manual_setup.txt`) document every manual step taken during installation, organized into numbered sections.
+- **⚡ Automated Installation:** Interactive scripts to install packages from the official repos and the AUR using either `paru` or `yay`.
+- **🐧 Two Distros:** Separate `arch/` and `cachyOs/` kits with the same structure but distro-tuned package lists. See [`PACKAGE_DIFF.md`](PACKAGE_DIFF.md) for what differs and why.
+- **🔧 Editable Package Lists:** All packages live in plain text files under each distro's `packages/` folder — add or remove a package by editing a single line, no scripting needed.
+- **🐢 Optional GNOME Layer:** Packages tied to the GNOME desktop (shell, `gdm`, extensions, tweaks, `gnome-boxes`) are split into `packages/gnome.txt` and installed via a dedicated menu option — skip it entirely on a non-GNOME desktop. Generic GTK apps stay in `aur.txt`.
+- **🎨 Post-Installation Configuration:** The shared `config/` directory holds drop-in configs for `fastfetch`, `starship`, and a working `.bashrc`.
+- **🗂️ Organized Guides:** The shared `toolv2/` directory groups command references by topic for faster lookup.
+- **📖 Manual Setup Guide:** Each distro folder ships a `manual_setup.txt` documenting every manual step, organized into numbered sections.
 
 ---
 
 ## 📦 What's Inside?
 
-```
+```text
 .
-├── setup_paru.sh          — Installer script using paru as the AUR helper
-├── setup_yay.sh           — Installer script using yay as the AUR helper
-├── manual_setup.md        — Step-by-step manual setup reference (Markdown)
-├── manual_setup.txt       — Same content as manual_setup.md, plain text
-├── packages/
-│   ├── pacman.txt         — Official repo packages (grouped by category)
-│   ├── aur.txt            — AUR packages (grouped by category)
-│   └── uninstall.txt      — Packages to remove (GNOME bloat / replaced apps)
-├── config/
-│   ├── .bashrc            — Working bash config (starship, pyenv, nvm, flutter)
-│   ├── fastfetch/         — System info display configs, presets, and assets
-│   └── starship.toml      — Terminal prompt config
-├── tools/
-│   ├── grub.txt           — Bootloader configuration
-│   ├── ollama.txt         — Local LLM setup
-│   ├── python versions.txt — Python version management (pyenv)
-│   └── ...                — Many more guides
-└── toolv2/                — Organized copy of the same guides, grouped by topic
-    ├── apps/              — flathub, ollama, xampp, vscode extensions, ytDown
-    ├── desktop/           — battery (CPU/thermal), ai_local, fastfetch, graphicPad, system_status
-    ├── runtime/           — paru, bash, node, python, anaconda
-    └── system/            — ethernet, fonts, gdm, grub
+├── arch/                    — Arch Linux setup kit
+│   ├── setup_paru.sh        — installer using paru
+│   ├── setup_yay.sh         — installer using yay
+│   ├── manual_setup.txt     — step-by-step manual reference (33 sections)
+│   └── packages/
+│       ├── pacman.txt       — official repo packages
+│       ├── aur.txt          — AUR packages
+│       ├── gnome.txt        — GNOME desktop, extensions & GNOME apps
+│       └── uninstall.txt    — packages to remove (bloat / replaced apps)
+├── cachyOs/                 — CachyOS setup kit (same layout)
+│   ├── setup_paru.sh
+│   ├── setup_yay.sh
+│   ├── manual_setup.txt     — CachyOS-adapted manual reference (35 sections)
+│   └── packages/{pacman,aur,gnome,uninstall}.txt
+├── config/                  — shared drop-in configuration
+│   ├── .bashrc              — working bash config (starship, pyenv, nvm, flutter)
+│   ├── fastfetch/           — system-info display configs, presets, assets
+│   └── starship.toml        — terminal prompt config
+├── toolv2/                  — shared topic-grouped command references
+│   ├── apps/                — flathub, ollama, xampp, vscode extensions, ytDown
+│   ├── desktop/             — battery (CPU/thermal), ai_local, fastfetch, …
+│   ├── runtime/             — paru, bash, node, python, anaconda
+│   └── system/              — ethernet, fonts, gdm, grub
+└── PACKAGE_DIFF.md          — arch vs cachyOs package diff + rationale
 ```
 
 ---
@@ -54,17 +57,26 @@ git clone https://github.com/Bishwajit-2810/arch_setup
 cd arch_setup
 ```
 
-**2. Edit package lists** _(optional)_
+**2. Pick your distro folder**
+
+```bash
+cd arch        # on Arch Linux
+# or
+cd cachyOs     # on CachyOS
+```
+
+**3. Edit package lists** _(optional)_
 
 Open any file under `packages/` and add or remove packages before running. Lines starting with `#` are treated as comments and ignored.
 
-```
-packages/pacman.txt   — official repo packages
-packages/aur.txt      — AUR packages
+```text
+packages/pacman.txt    — official repo packages
+packages/aur.txt       — AUR packages
+packages/gnome.txt     — GNOME desktop / extensions / GNOME apps
 packages/uninstall.txt — packages to uninstall
 ```
 
-**3. Make the script executable and run it**
+**4. Make the script executable and run it**
 
 Choose either `paru` or `yay` as your AUR helper:
 
@@ -74,17 +86,31 @@ chmod u+x setup_paru.sh && ./setup_paru.sh
 chmod u+x setup_yay.sh && ./setup_yay.sh
 ```
 
-The AUR helper will be installed automatically if it is not already present.
+On Arch the AUR helper is installed automatically if missing. On CachyOS both `paru` and `yay` are already available from the repos / pre-installed.
 
-**4. Follow the menu**
+**5. Follow the menu**
 
-```
+```text
 1) Install official (pacman) packages
 2) Install AUR packages
-3) Uninstall packages
-4) Dry run (preview)
-5) Exit
+3) Install GNOME packages (desktop, extensions, GNOME apps)
+4) Uninstall packages
+5) Dry run (preview)
+6) Exit
 ```
+
+---
+
+## 🆚 Arch vs CachyOS
+
+The two kits share the same scripts and almost the same package lists. The differences exist because CachyOS:
+
+- ships `paru`/`yay` pre-installed and enables the CachyOS + Chaotic-AUR binary repos by default;
+- provides its own `cachyos-*` packages (keyring, mirrorlist, settings, kernel manager, `cachy-browser`, …);
+- handles GPU drivers with `chwd` instead of `nvidia-inst`, and ranks mirrors with `cachyos-rate-mirrors`;
+- defaults to the optimized `linux-cachyos` kernel.
+
+Every added/removed package and the reasoning is documented in [`PACKAGE_DIFF.md`](PACKAGE_DIFF.md).
 
 ---
 
@@ -92,6 +118,7 @@ The AUR helper will be installed automatically if it is not already present.
 
 - Always run **option 4 (dry run)** first to preview all changes before applying them.
 - The scripts require `sudo` privileges.
-- Some packages need extra steps after install — check the `tools/` directory for specific instructions.
+- Some packages need extra steps after install — check the distro's `manual_setup.txt` and the shared `toolv2/` references.
+- **CachyOS:** never add `cachyos-*` meta packages to `uninstall.txt` — removing them breaks the curated setup.
 
 **Happy Arching!** 😄

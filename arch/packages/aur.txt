@@ -18,13 +18,6 @@ mongodb-compass-bin
 portainer-bin
 xampp
 
-# ── GNOME Extensions & Tools ──────────────────────────────────────────────────
-extension-manager
-planify
-parabolic
-devtoolbox
-pencil
-
 # ── Fonts ─────────────────────────────────────────────────────────────────────
 ttf-google
 ttf-google-sans
@@ -36,8 +29,12 @@ ibus-avro-git
 # ── Apps ──────────────────────────────────────────────────────────────────────
 google-chrome
 hydra-launcher-bin
+devtoolbox
 lorien-bin
 onlyoffice-bin
+parabolic
+pencil
+planify
 proton-vpn-gtk-app
 protonplus
 protontricks
