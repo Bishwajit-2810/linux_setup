@@ -30,7 +30,7 @@ nano
 ranger
 sl
 starship
-tldr
+#tldr
 tree
 vi
 vim
@@ -49,7 +49,7 @@ curl
 dkms
 docker
 docker-compose
-exfat-utils
+#exfat-utils
 gcc
 git
 go
@@ -71,19 +71,20 @@ tk
 uv
 wget
 xz
-zlib
+#zlib
 apostrophe
 
 # ── NVIDIA & GPU ──────────────────────────────────────────────────────────────
 # Prefer `sudo chwd -a` (CachyOS Hardware Detection) over manual driver installs.
 cuda
+lib32-nvidia-utils
+lib32-vulkan-intel
 libva-nvidia-driver
 nvidia-container-toolkit
 nvidia-open-dkms
 nvidia-settings
 nvidia-utils
 nvtop
-rocm-hip-sdk
 vulkan-intel
 vulkan-tools
 vulkan-validation-layers
@@ -114,7 +115,7 @@ libxv
 obs-studio
 pipewire
 pipewire-alsa
-pipewire-jack
+#pipewire-jack
 pipewire-pulse
 vlc
 wavpack
