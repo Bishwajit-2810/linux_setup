@@ -1,9 +1,0 @@
-sudo nano /etc/default/grub
-
-GRUB_TIMEOUT=0
-GRUB_TIMEOUT_STYLE=hidden
-GRUB_HIDDEN_TIMEOUT=0
-
-
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-sudo reboot

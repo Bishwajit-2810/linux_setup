@@ -1,4 +1,0 @@
-flatpak install flathub com.github.tenderowl.frog
-flatpak install flathub com.mongodb.Compass
-flatpak install flathub com.stremio.Stremio
-flatpak install flathub me.dusansimic.DynamicWallpaper
