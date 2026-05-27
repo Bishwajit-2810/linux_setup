@@ -55,37 +55,41 @@ print_header() {
 main_menu() {
   print_header
 
-  local n_pacman n_aur n_remove
+  local n_pacman n_aur n_gnome n_remove
   n_pacman=$(pkg_count "$PKG_DIR/pacman.txt")
   n_aur=$(pkg_count "$PKG_DIR/aur.txt")
+  n_gnome=$(pkg_count "$PKG_DIR/gnome.txt")
   n_remove=$(pkg_count "$PKG_DIR/uninstall.txt")
 
   echo -e "${BOLD}${WHITE}  Packages${R}"
   echo -e "  ${GRAY}pacman.txt${R}    ${CYAN}${n_pacman} packages${R}"
   echo -e "  ${GRAY}aur.txt${R}       ${CYAN}${n_aur} packages${R}"
+  echo -e "  ${GRAY}gnome.txt${R}     ${CYAN}${n_gnome} packages${R}"
   echo -e "  ${GRAY}uninstall.txt${R} ${CYAN}${n_remove} packages${R}"
   echo
   divider
   echo
   echo -e "  ${BOLD}${GREEN} 1${R}  ${WHITE}Install pacman packages${R}     ${DIM}${GRAY}[${n_pacman}]${R}"
   echo -e "  ${BOLD}${GREEN} 2${R}  ${WHITE}Install AUR packages${R}        ${DIM}${GRAY}[${n_aur}]${R}"
-  echo -e "  ${BOLD}${YELLOW} 3${R}  ${WHITE}Uninstall packages${R}          ${DIM}${GRAY}[${n_remove}]${R}"
-  echo -e "  ${BOLD}${CYAN} 4${R}  ${WHITE}Dry run preview${R}"
-  echo -e "  ${BOLD}${RED} 5${R}  ${WHITE}Exit${R}"
+  echo -e "  ${BOLD}${GREEN} 3${R}  ${WHITE}Install GNOME packages${R}      ${DIM}${GRAY}[${n_gnome}]${R}"
+  echo -e "  ${BOLD}${YELLOW} 4${R}  ${WHITE}Uninstall packages${R}          ${DIM}${GRAY}[${n_remove}]${R}"
+  echo -e "  ${BOLD}${CYAN} 5${R}  ${WHITE}Dry run preview${R}"
+  echo -e "  ${BOLD}${RED} 6${R}  ${WHITE}Exit${R}"
   echo
   divider
   echo
-  echo -ne "  ${BOLD}Choose [1-5]:${R} "
+  echo -ne "  ${BOLD}Choose [1-6]:${R} "
   read -r choice
   echo
 
   case "$choice" in
     1) install_pacman_packages ;;
     2) install_yay; install_aur_packages ;;
-    3) install_yay; uninstall_packages ;;
-    4) show_dry_run ;;
-    5) echo -e "  ${CYAN}Goodbye!${R}\n"; exit 0 ;;
-    *) error "Invalid option — please choose 1 to 5." ;;
+    3) install_yay; install_gnome_packages ;;
+    4) install_yay; uninstall_packages ;;
+    5) show_dry_run ;;
+    6) echo -e "  ${CYAN}Goodbye!${R}\n"; exit 0 ;;
+    *) error "Invalid option — please choose 1 to 6." ;;
   esac
 
   echo
@@ -151,6 +155,19 @@ install_aur_packages() {
   log "AUR packages installed successfully."
 }
 
+install_gnome_packages() {
+  local -a pkgs
+  mapfile -t pkgs < <(load_packages "$PKG_DIR/gnome.txt")
+  echo
+  echo -e "${BOLD}${BLUE}  ┌─ Installing GNOME packages ─────────────────────┐${R}"
+  echo -e "${BOLD}${BLUE}  │${R}  ${CYAN}${#pkgs[@]} packages  ›  yay -S${R}                       ${BOLD}${BLUE}│${R}"
+  echo -e "${BOLD}${BLUE}  └─────────────────────────────────────────────────┘${R}"
+  echo
+  yay -S --needed --noconfirm "${pkgs[@]}"
+  echo
+  log "GNOME packages installed successfully."
+}
+
 uninstall_packages() {
   local -a pkgs
   mapfile -t pkgs < <(load_packages "$PKG_DIR/uninstall.txt")
@@ -179,6 +196,11 @@ show_dry_run() {
   echo -e "  ${BOLD}${CYAN}AUR packages${R}  ${GRAY}($(pkg_count "$PKG_DIR/aur.txt"))${R}"
   divider
   load_packages "$PKG_DIR/aur.txt" | pr -2 -t -w 80 | sed 's/^/  /'
+
+  echo
+  echo -e "  ${BOLD}${BLUE}GNOME packages${R}  ${GRAY}($(pkg_count "$PKG_DIR/gnome.txt"))${R}"
+  divider
+  load_packages "$PKG_DIR/gnome.txt" | pr -2 -t -w 80 | sed 's/^/  /'
 
   echo
   echo -e "  ${BOLD}${YELLOW}Packages to uninstall${R}  ${GRAY}($(pkg_count "$PKG_DIR/uninstall.txt"))${R}"
