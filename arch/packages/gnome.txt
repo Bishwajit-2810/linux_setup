@@ -1,0 +1,16 @@
+# GNOME desktop environment, shell extensions, and GNOME-native apps/tools.
+# Installed via the AUR helper (yay/paru) since this list mixes repo and AUR
+# packages. Skip this list entirely if you run a non-GNOME desktop.
+
+# ── GNOME Desktop & Shell ─────────────────────────────────────────────────────
+gdm
+gnome-browser-connector
+gnome-menus
+gnome-shell-extensions
+gnome-tweaks
+gnome-font-viewer
+ptyxis
+
+# ── GNOME Apps & Tools ────────────────────────────────────────────────────────
+extension-manager
+gnome-boxes
