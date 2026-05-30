@@ -1,0 +1,37 @@
+# KDE Plasma desktop environment, core session components, and KDE-native apps.
+# Installed via the AUR helper (yay/paru) since this list may mix repo and AUR
+# packages. Skip this list entirely if you run a non-KDE desktop.
+
+# ── Plasma Desktop & Shell ────────────────────────────────────────────────────
+plasma-desktop
+plasma-workspace
+kwin
+systemsettings
+sddm
+
+# ── KDE Apps ──────────────────────────────────────────────────────────────────
+dolphin
+konsole
+kate
+ark
+gwenview
+okular
+spectacle
+
+# ── Network ───────────────────────────────────────────────────────────────────
+networkmanager
+plasma-nm
+
+# ── Audio (PipeWire) ──────────────────────────────────────────────────────────
+pipewire
+pipewire-pulse
+wireplumber
+
+# ── Bluetooth ─────────────────────────────────────────────────────────────────
+bluez
+bluez-utils
+bluedevil
+
+# ── Power Management ──────────────────────────────────────────────────────────
+powerdevil
+upower

@@ -9,9 +9,9 @@ CachyOS is Arch-based, so the two kits share the vast majority of their packages
 3. It ships **`paru`/`yay` pre-installed** and provides them as plain repo packages.
 4. It defaults to the optimized **`linux-cachyos` kernel** and uses **`chwd`** for hardware/GPU driver detection.
 
-> Counts: Arch `pacman.txt` 185 / CachyOS 197 · Arch `aur.txt` 32 / CachyOS 28 · `gnome.txt` 9 / 9 · `uninstall.txt` 14 / 15.
+> Counts: Arch `pacman.txt` 185 / CachyOS 197 · Arch `aur.txt` 32 / CachyOS 28 · `gnome.txt` 9 / 9 · `kde.txt` 22 / 22 · `uninstall.txt` 14 / 15.
 >
-> **GNOME split (both distros):** the GNOME desktop, shell extensions, and GNOME-native apps/tools were pulled out of `pacman.txt`/`aur.txt` into a separate `gnome.txt`, installed via menu option 3. This split is identical on Arch and CachyOS, so it does **not** contribute to the arch-vs-cachy differences below.
+> **Desktop splits (both distros):** the GNOME desktop/shell/apps were pulled out of `pacman.txt`/`aur.txt` into `gnome.txt` (menu option 3), and the KDE Plasma desktop/session/apps into `kde.txt` (menu option 4). Both splits are identical on Arch and CachyOS, so they do **not** contribute to the arch-vs-cachy differences below.
 
 ---
 
@@ -79,6 +79,19 @@ Identical on both distros (9 packages), installed via menu option 3 with the AUR
 On CachyOS the GNOME edition already ships `gdm` + the GNOME shell, so `--needed` makes re-running this list harmless. Skip it on a non-GNOME desktop.
 
 > Moved out to `aur.txt` as regular apps: `planify`, `parabolic`, `devtoolbox` (GTK4/libadwaita apps that run on any desktop), and `pencil` (Electron-based Pencil Project). They use GTK but aren't tied to the GNOME desktop.
+
+---
+
+## 🐬 KDE list (`kde.txt`)
+
+Identical on both distros (22 packages), installed via menu option 4 with the AUR helper (the entries are all in the official repos, but `yay`/`paru` handle them fine). Kept to packages genuinely tied to the **KDE Plasma desktop** — not generic Qt apps:
+
+- **Plasma desktop & shell:** `plasma-desktop`, `plasma-workspace`, `kwin`, `systemsettings`, `sddm`
+- **KDE apps:** `dolphin`, `konsole`, `kate`, `ark`, `gwenview`, `okular`, `spectacle`
+- **Plasma integration:** `plasma-nm` (network), `bluedevil` (Bluetooth), `powerdevil` (power)
+- **Supporting services:** `networkmanager`, `pipewire`, `pipewire-pulse`, `wireplumber`, `bluez`, `bluez-utils`, `upower`
+
+Install only the desktop list matching your environment — picking both GNOME and KDE pulls in two display managers (`gdm` + `sddm`); enable just one. Skip this list on a non-KDE desktop.
 
 ---
 
