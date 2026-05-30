@@ -10,6 +10,7 @@ A personal collection of scripts and configuration files for a fast, consistent 
 - **🐧 Two Distros:** Separate `arch/` and `cachyOs/` kits with the same structure but distro-tuned package lists. See [`PACKAGE_DIFF.md`](PACKAGE_DIFF.md) for what differs and why.
 - **🔧 Editable Package Lists:** All packages live in plain text files under each distro's `packages/` folder — add or remove a package by editing a single line, no scripting needed.
 - **🐢 Optional GNOME Layer:** Packages tied to the GNOME desktop (shell, `gdm`, extensions, tweaks, `gnome-boxes`) are split into `packages/gnome.txt` and installed via a dedicated menu option — skip it entirely on a non-GNOME desktop. Generic GTK apps stay in `aur.txt`.
+- **🐬 Optional KDE Layer:** Packages tied to the KDE Plasma desktop (Plasma shell, `kwin`, `sddm`, `systemsettings`, integration like `plasma-nm`/`bluedevil`/`powerdevil`, and KDE apps like `dolphin`/`konsole`/`kate`) are split into `packages/kde.txt` and installed via their own menu option — skip it on a non-KDE desktop. Generic Qt apps stay in `aur.txt`.
 - **🎨 Post-Installation Configuration:** The shared `config/` directory holds drop-in configs for `fastfetch`, `starship`, and a working `.bashrc`.
 - **🗂️ Organized Guides:** The shared `toolv2/` directory groups command references by topic for faster lookup.
 - **📖 Manual Setup Guide:** Each distro folder ships a `manual_setup.txt` documenting every manual step, organized into numbered sections.
@@ -28,19 +29,20 @@ A personal collection of scripts and configuration files for a fast, consistent 
 │       ├── pacman.txt       — official repo packages
 │       ├── aur.txt          — AUR packages
 │       ├── gnome.txt        — GNOME desktop, extensions & GNOME apps
+│       ├── kde.txt          — KDE Plasma desktop, session & KDE apps
 │       └── uninstall.txt    — packages to remove (bloat / replaced apps)
 ├── cachyOs/                 — CachyOS setup kit (same layout)
 │   ├── setup_paru.sh
 │   ├── setup_yay.sh
 │   ├── manual_setup.txt     — CachyOS-adapted manual reference (35 sections)
-│   └── packages/{pacman,aur,gnome,uninstall}.txt
+│   └── packages/{pacman,aur,gnome,kde,uninstall}.txt
 ├── config/                  — shared drop-in configuration
 │   ├── .bashrc              — working bash config (starship, pyenv, nvm, flutter)
 │   ├── fastfetch/           — system-info display configs, presets, assets
 │   └── starship.toml        — terminal prompt config
 ├── toolv2/                  — shared topic-grouped command references
 │   ├── apps/                — flathub, ollama, xampp, vscode extensions, ytDown
-│   ├── desktop/             — battery (CPU/thermal), ai_local, fastfetch, …
+│   ├── desktop/             — battery (CPU/thermal), power_profiles (KDE), ai_local, fastfetch, …
 │   ├── runtime/             — paru, bash, node, python, anaconda
 │   └── system/              — ethernet, fonts, gdm, grub
 └── PACKAGE_DIFF.md          — arch vs cachyOs package diff + rationale
@@ -73,6 +75,7 @@ Open any file under `packages/` and add or remove packages before running. Lines
 packages/pacman.txt    — official repo packages
 packages/aur.txt       — AUR packages
 packages/gnome.txt     — GNOME desktop / extensions / GNOME apps
+packages/kde.txt       — KDE Plasma desktop / session / KDE apps
 packages/uninstall.txt — packages to uninstall
 ```
 
@@ -94,9 +97,10 @@ On Arch the AUR helper is installed automatically if missing. On CachyOS both `p
 1) Install official (pacman) packages
 2) Install AUR packages
 3) Install GNOME packages (desktop, extensions, GNOME apps)
-4) Uninstall packages
-5) Dry run (preview)
-6) Exit
+4) Install KDE packages (Plasma desktop, session, KDE apps)
+5) Uninstall packages
+6) Dry run (preview)
+7) Exit
 ```
 
 ---
@@ -116,7 +120,7 @@ Every added/removed package and the reasoning is documented in [`PACKAGE_DIFF.md
 
 ## ⚠️ Important Notes
 
-- Always run **option 4 (dry run)** first to preview all changes before applying them.
+- Always run **option 6 (dry run)** first to preview all changes before applying them.
 - The scripts require `sudo` privileges.
 - Some packages need extra steps after install — check the distro's `manual_setup.txt` and the shared `toolv2/` references.
 - **CachyOS:** never add `cachyos-*` meta packages to `uninstall.txt` — removing them breaks the curated setup.
