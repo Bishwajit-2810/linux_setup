@@ -42,7 +42,7 @@ A personal collection of scripts and configuration files for a fast, consistent 
 │   └── starship.toml        — terminal prompt config
 ├── toolv2/                  — shared topic-grouped command references
 │   ├── apps/                — flathub, ollama, xampp, vscode extensions, ytDown
-│   ├── desktop/             — battery (CPU/thermal), ai_local, fastfetch, …
+│   ├── desktop/             — battery (CPU/thermal), power_profiles (KDE), ai_local, fastfetch, …
 │   ├── runtime/             — paru, bash, node, python, anaconda
 │   └── system/              — ethernet, fonts, gdm, grub
 └── PACKAGE_DIFF.md          — arch vs cachyOs package diff + rationale

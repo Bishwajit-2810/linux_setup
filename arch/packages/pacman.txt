@@ -142,12 +142,15 @@ cpufetch
 cups
 cups-pk-helper
 efibootmgr
+exfatprogs
 fastfetch
 figlet
 flatpak
 gufw
 guvcview
+hwinfo
 intel-ucode
+inxi
 linux-headers
 lm_sensors
 mesa
@@ -158,6 +161,7 @@ nvm
 os-prober
 p7zip
 7zip
+pciutils
 postgresql
 rp-pppoe
 rsync
@@ -166,9 +170,11 @@ smartmontools
 speedtest-cli
 tar
 touchegg
+udisks2
 ufw
 unrar
 unzip
+usbutils
 xorg-server
 xorg-xinit
 zip

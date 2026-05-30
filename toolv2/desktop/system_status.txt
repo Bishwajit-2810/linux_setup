@@ -6,6 +6,16 @@
 # ============================================================
 
 
+# ---- KDE Plasma (post-install — run after installing the kde.txt list) ----
+sudo systemctl enable --now sddm.service               # display manager / login screen
+sudo systemctl enable --now NetworkManager.service     # network stack (plasma-nm tray applet)
+sudo systemctl enable --now power-profiles-daemon.service  # PowerDevil power-profile switch
+# Only ONE display manager may be enabled — if switching from GNOME, first:
+#   sudo systemctl disable --now gdm.service
+# upower + udisks2 are D-Bus/socket activated — no manual enable needed.
+# Bluetooth (bluedevil) uses the Bluetooth unit below.
+# Verify the session after reboot: echo $XDG_SESSION_TYPE   (expect: wayland)
+
 # ---- Bluetooth ----
 sudo systemctl enable --now bluetooth
 
@@ -47,3 +57,8 @@ sudo systemctl status mysqld
 # ---- CPU power / thermals ----
 sudo systemctl enable --now cpupower.service
 sudo systemctl enable --now thermald
+
+# ---- Laptop maintenance (SSD trim + disk health) ----
+sudo systemctl enable --now fstrim.timer        # weekly SSD TRIM
+sudo systemctl enable --now smartd.service       # background disk-health monitoring (smartmontools)
+systemctl list-timers fstrim.timer               # confirm the trim timer is scheduled

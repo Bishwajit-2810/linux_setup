@@ -9,7 +9,7 @@ CachyOS is Arch-based, so the two kits share the vast majority of their packages
 3. It ships **`paru`/`yay` pre-installed** and provides them as plain repo packages.
 4. It defaults to the optimized **`linux-cachyos` kernel** and uses **`chwd`** for hardware/GPU driver detection.
 
-> Counts: Arch `pacman.txt` 185 / CachyOS 197 · Arch `aur.txt` 32 / CachyOS 28 · `gnome.txt` 9 / 9 · `kde.txt` 22 / 22 · `uninstall.txt` 14 / 15.
+> Counts: Arch `pacman.txt` 191 / CachyOS 200 · Arch `aur.txt` 32 / CachyOS 28 · `gnome.txt` 9 / 9 · `kde.txt` 37 / 37 · `uninstall.txt` 14 / 15.
 >
 > **Desktop splits (both distros):** the GNOME desktop/shell/apps were pulled out of `pacman.txt`/`aur.txt` into `gnome.txt` (menu option 3), and the KDE Plasma desktop/session/apps into `kde.txt` (menu option 4). Both splits are identical on Arch and CachyOS, so they do **not** contribute to the arch-vs-cachy differences below.
 
@@ -84,12 +84,18 @@ On CachyOS the GNOME edition already ships `gdm` + the GNOME shell, so `--needed
 
 ## 🐬 KDE list (`kde.txt`)
 
-Identical on both distros (22 packages), installed via menu option 4 with the AUR helper (the entries are all in the official repos, but `yay`/`paru` handle them fine). Kept to packages genuinely tied to the **KDE Plasma desktop** — not generic Qt apps:
+Identical on both distros (37 packages), installed via menu option 4 with the AUR helper (the entries are all in the official repos, but `yay`/`paru` handle them fine). Kept to packages genuinely tied to the **KDE Plasma desktop** — not generic Qt or CLI apps:
 
-- **Plasma desktop & shell:** `plasma-desktop`, `plasma-workspace`, `kwin`, `systemsettings`, `sddm`
-- **KDE apps:** `dolphin`, `konsole`, `kate`, `ark`, `gwenview`, `okular`, `spectacle`
-- **Plasma integration:** `plasma-nm` (network), `bluedevil` (Bluetooth), `powerdevil` (power)
+- **Plasma desktop & shell:** `plasma-desktop`, `plasma-workspace`, `kwin`, `systemsettings`, `sddm`, `kscreen` (display config), `polkit-kde-agent` (auth popups), `xdg-desktop-portal-kde` (screen share / portals), `kwallet-pam` (auto-unlock wallet at login)
+- **KDE apps:** `dolphin`, `konsole`, `kate`, `ark`, `gwenview`, `okular`, `spectacle`, `isoimagewriter`
+- **Dolphin / file integration:** `kio-admin`, `dolphin-plugins`, `ffmpegthumbs`
+- **Connectivity / disk / info:** `kdeconnect`, `partitionmanager`, `plasma-systemmonitor`, `kinfocenter`
+- **Plasma integration:** `plasma-nm` (network), `plasma-pa` (volume tray), `phonon-qt6-gstreamer` (media backend), `bluedevil` (Bluetooth), `powerdevil` + `power-profiles-daemon` (power profiles)
 - **Supporting services:** `networkmanager`, `pipewire`, `pipewire-pulse`, `wireplumber`, `bluez`, `bluez-utils`, `upower`
+
+Tuned for a **laptop**: `power-profiles-daemon` backs PowerDevil's Power Save / Balanced / Performance switch (see `toolv2/desktop/power_profiles.txt`), `kscreen` handles external-monitor hotplug, and brightness/lid/battery come from `powerdevil` + `upower`. Touchpad gestures and fractional scaling work out of the box on Plasma's default Wayland session (`kwin`).
+
+Generic system/CLI tools that pair with this desktop (`udisks2`, `exfatprogs`, `inxi`, `hwinfo`, `usbutils`, `pciutils` — plus the already-present `btop`, `fastfetch`, `ntfs-3g`, `smartmontools`) live in `pacman.txt`, not here, since they run on any desktop. `inxi`/`hwinfo`/`usbutils`/`pciutils` are the CLI backends `kinfocenter` reads for richer hardware detail.
 
 Install only the desktop list matching your environment — picking both GNOME and KDE pulls in two display managers (`gdm` + `sddm`); enable just one. Skip this list on a non-KDE desktop.
 

@@ -1,6 +1,9 @@
 # KDE Plasma desktop environment, core session components, and KDE-native apps.
 # Installed via the AUR helper (yay/paru) since this list may mix repo and AUR
 # packages. Skip this list entirely if you run a non-KDE desktop.
+#
+# Scope: only packages genuinely tied to the KDE/Plasma desktop live here.
+# Generic CLI/system tools (btop, inxi, usbutils, ntfs-3g, …) live in pacman.txt.
 
 # ── Plasma Desktop & Shell ────────────────────────────────────────────────────
 plasma-desktop
@@ -8,6 +11,10 @@ plasma-workspace
 kwin
 systemsettings
 sddm
+kscreen                 # display config — external monitor / projector hotplug
+polkit-kde-agent        # authentication (password) popups for privileged actions
+xdg-desktop-portal-kde  # screenshots, screen sharing, sandboxed-app file dialogs
+kwallet-pam             # auto-unlock KWallet at login (stores WiFi/app secrets)
 
 # ── KDE Apps ──────────────────────────────────────────────────────────────────
 dolphin
@@ -17,6 +24,22 @@ ark
 gwenview
 okular
 spectacle
+isoimagewriter          # write ISO images to USB
+
+# ── Dolphin / File Integration ────────────────────────────────────────────────
+kio-admin               # open/edit files as root from Dolphin (admin:// protocol)
+dolphin-plugins         # git/svn/dropbox context-menu integration
+ffmpegthumbs            # video thumbnails in Dolphin
+
+# ── Connectivity ──────────────────────────────────────────────────────────────
+kdeconnect              # phone integration (notifications, file transfer, remote)
+
+# ── Disk & Storage ────────────────────────────────────────────────────────────
+partitionmanager        # KDE partition editor
+
+# ── System Info & Monitoring ──────────────────────────────────────────────────
+plasma-systemmonitor    # KDE resource/process monitor GUI
+kinfocenter             # hardware / system information center
 
 # ── Network ───────────────────────────────────────────────────────────────────
 networkmanager
@@ -26,6 +49,8 @@ plasma-nm
 pipewire
 pipewire-pulse
 wireplumber
+plasma-pa               # volume control applet in the system tray
+phonon-qt6-gstreamer    # Phonon backend — KDE system sounds & media playback
 
 # ── Bluetooth ─────────────────────────────────────────────────────────────────
 bluez
@@ -35,3 +60,4 @@ bluedevil
 # ── Power Management ──────────────────────────────────────────────────────────
 powerdevil
 upower
+power-profiles-daemon   # backend for PowerDevil's Power Save / Balanced / Performance switch

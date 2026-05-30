@@ -1,0 +1,79 @@
+# ============================================================
+# DESKTOP / Power Profiles — PowerDevil + power-profiles-daemon
+# ============================================================
+# Purpose: Manage laptop power on KDE Plasma. PowerDevil is the
+#          Plasma power module (battery, brightness, suspend,
+#          lid actions); power-profiles-daemon is the backend
+#          that provides the Power Save / Balanced / Performance
+#          switch in the battery tray menu.
+# Notes:   For CPU-governor / thermal tuning (cpupower, thermald,
+#          auto-cpufreq) see battery.txt. PPD and TLP conflict —
+#          run only one. PowerDevil integrates with PPD, not TLP.
+# ============================================================
+
+
+# ---- 1) Install ----
+sudo pacman -S powerdevil power-profiles-daemon upower
+# powerdevil               — Plasma power management module
+# power-profiles-daemon    — profile backend (Power Save/Balanced/Performance)
+# upower                   — battery / power-source status daemon
+
+
+# ---- 2) Enable the services ----
+sudo systemctl enable --now power-profiles-daemon.service
+sudo systemctl enable --now upower.service
+systemctl status power-profiles-daemon.service
+
+
+# ---- 3) power-profiles-daemon CLI (powerprofilesctl) ----
+powerprofilesctl                       # show active + available profiles
+powerprofilesctl list                  # list profiles with details
+powerprofilesctl get                   # print the active profile
+powerprofilesctl set power-saver       # switch: power-saver | balanced | performance
+powerprofilesctl set balanced
+powerprofilesctl set performance
+
+# Watch what is holding a profile (apps can request performance/power-saver):
+powerprofilesctl list-holds
+
+
+# ---- 4) PowerDevil — where to configure in Plasma ----
+# System Settings → Power Management
+#   - Energy Saving      : screen/dim/suspend timeouts (on battery vs AC)
+#   - Power Profiles     : default profile per power state
+#   - Advanced Settings  : critical battery action, lid-close behavior
+# Battery icon in the system tray exposes the live profile switch.
+
+# Inspect / nudge PowerDevil over D-Bus:
+qdbus6 org.kde.Solid.PowerManagement /org/kde/Solid/PowerManagement \
+  org.kde.Solid.PowerManagement.currentProfile
+qdbus6 org.freedesktop.PowerManagement.Inhibit   # see suspend inhibitors
+
+
+# ---- 5) upower — battery state from the CLI ----
+upower -e                              # list power devices (find the battery path)
+upower -i /org/freedesktop/UPower/devices/battery_BAT0   # detail: charge, health, rate
+upower -d                              # dump everything (all devices)
+# Battery health = energy-full / energy-full-design (capacity vs factory spec).
+
+
+# ---- 6) Brightness (PowerDevil handles keys; manual fallback) ----
+# Brightness keys are handled by PowerDevil automatically. Manual control:
+brightnessctl set 50%                  # needs: sudo pacman -S brightnessctl
+brightnessctl get
+brightnessctl set +10%
+brightnessctl set 10%-
+
+
+# ---- 7) Verify suspend / lid behavior ----
+# Lid + suspend are owned by systemd-logind, surfaced through PowerDevil.
+systemctl suspend                      # test suspend-to-RAM
+cat /sys/power/mem_sleep               # supported sleep states ([s2idle] / deep)
+journalctl -b -u power-profiles-daemon # debug profile-switch issues
+
+
+# ---- 8) Conflict check (PPD vs TLP) ----
+# If profiles do not switch, TLP may be installed and overriding PPD:
+systemctl status tlp.service
+# To use PPD instead: sudo systemctl disable --now tlp.service && \
+#   sudo systemctl enable --now power-profiles-daemon.service
